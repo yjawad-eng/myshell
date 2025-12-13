@@ -14,4 +14,16 @@ exit(0);
 void log_command(const char *line) {
   static int fd = -1;
 if (fd == -1) {
-fd = open("myshell.log" ,  O_
+fd = open("myshell.log" ,  O_WRONLY|O_CREAT|O_APPEND, 0644);
+if(fd < 0) { perror("open log"); 
+            return; }
+}
+size_t len = strlen(line);
+if (len && line[len-1] != '\n') {
+write(fd, line, len);
+write(fd, "\n" , 1);
+} else {
+write(fd, line, len);
+
+      }
+}
