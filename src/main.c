@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "parse.h"
 #include "execute.h"
+#include "builtin.h"
 int main(void) {
 char line [1024];
 
@@ -30,7 +31,11 @@ fprintf(stderr, "parse error\n");
 free_job(&job);
 continue;
 }
+if (is_builtin(job.left.argv)) {
+run_builtin(job.left.argv);
+} else {
 execute_job(&job);
+}
 free_job(&job);
 }
 return 0;

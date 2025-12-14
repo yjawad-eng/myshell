@@ -1,6 +1,3 @@
-
-
-
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -14,8 +11,18 @@ return strcmp(argv[0], "cd") == 0;
 }
 
 void run_builtin(char **argv) {
-  const char *target = argv[1] ? argv[1] : getenv("HOME");
-if (!target || chdir(target) != 0){
- perror("cd");
+if(strcmp(argv[0], "cd") == 0) {
+char *path = argv[1];
+if (path == NULL) {
+path = getenv("HOME");
+if(!path) {
+fprintf(stderr, "cd: HOME not set\n");
+return;
 }
 }
+if (chdir(path) != 0) {
+perror("cd");
+}
+}
+}
+
