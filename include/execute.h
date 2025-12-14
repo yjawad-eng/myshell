@@ -1,4 +1,4 @@
-#
+#ifndef
 #define
 #include <sys/types.h>
 #include "parse.h"
