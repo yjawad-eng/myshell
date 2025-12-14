@@ -1,10 +1,10 @@
-#include <unistd.h>
-#include <sys/wait.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 #include "execute.h"
-
+#include "signals.h"
 void execute_job(Job *job) {
     pid_t pid;
     int status;
@@ -19,13 +19,18 @@ void execute_job(Job *job) {
         return;
     }
 
+    /* Child */
     if (pid == 0) {
-        /* Child process */
+        restore_child_signals();
         execvp(job->left.argv[0], job->left.argv);
         perror("execvp");
-        _exit(1);
+        exit(1);
+    }
+
+    /* Parent */
+    if (job->background) {
+        printf("[bg] started pid %d\n", pid);
     } else {
-        /* Parent process */
         waitpid(pid, &status, 0);
     }
 }

@@ -4,9 +4,10 @@
 #include "parse.h"
 #include "execute.h"
 #include "builtin.h"
+#include "signals.h"
 int main(void) {
 char line [1024];
-
+setup_shell_signals();
 while(1) {
 printf("myshell> ");
 fflush(stdout);
