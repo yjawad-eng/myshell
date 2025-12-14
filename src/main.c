@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "parse.h"
+#include "execute.h"
 int main(void) {
 char line [1024];
 
@@ -29,11 +30,7 @@ fprintf(stderr, "parse error\n");
 free_job(&job);
 continue;
 }
-if (job.left.argv) {
-for (int i=0; job.left.argv[i]; i++) {
-printf("argv[%d] = %s\n", i, job.left.argv[i]);
-}
-}
+execute_job(&job);
 free_job(&job);
 }
 return 0;
