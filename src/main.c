@@ -5,9 +5,11 @@
 #include "execute.h"
 #include "builtin.h"
 #include "signals.h"
+#include "logger.h"
 int main(void) {
 char line [1024];
 setup_shell_signals();
+init_logger();
 while(1) {
 printf("myshell> ");
 fflush(stdout);
@@ -25,8 +27,8 @@ line[len-1] = '\0';
 if (strcmp(line, "exit") == 0 ||strcmp(line, "quit") == 0) {
 break;
 }
-Job job;
-memset(&job, 0, sizeof(Job));
+job_t job;
+memset(&job, 0, sizeof(job));
 if (parse_line(line, &job) != 0) {
 fprintf(stderr, "parse error\n");
 free_job(&job);
@@ -39,5 +41,6 @@ execute_job(&job);
 }
 free_job(&job);
 }
+close_logger();
 return 0;
 }
