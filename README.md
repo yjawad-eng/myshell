@@ -1,9 +1,15 @@
 # myshell
 -Yumna Jawad & Jonah McField
 - Fall 2025 CS 12600-001 Systems Programming
-##How to Run
+
+  ## dependencies
+- Linux environment, gcc, make
+
+  ## Build
+  - make
+## How to Run
 -  ./myshell
-##Features
+## Features
 -  External commands
 -  background jobs
 -  I/O redirection
